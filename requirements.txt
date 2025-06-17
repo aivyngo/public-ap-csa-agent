@@ -2,10 +2,6 @@ fastapi
 uvicorn[standard]
 openai
 pydantic
-python-dotenvfastapi
-uvicorn[standard]
-openai
-pydantic
 python-dotenv
 httpx
 PyPDF2

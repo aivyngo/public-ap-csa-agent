@@ -2,6 +2,7 @@ import json
 from openai import AsyncOpenAI
 from config import OPENAI_API_KEY
 from typing import List, Callable, Optional
+from models.models import ToolCallOutput  
 
 client = AsyncOpenAI(api_key=OPENAI_API_KEY)
 
@@ -14,7 +15,7 @@ class Agent:
 
 class Runner:
     @staticmethod
-    async def run(agent: Agent, user_prompt: str):
+    async def run(agent: Agent, user_prompt_list: List):
         functions = []
         for tool in agent.tools:
             if hasattr(tool, "name") and hasattr(tool, "description") and hasattr(tool, "parameters"):
@@ -26,24 +27,21 @@ class Runner:
 
         messages = [
             {"role": "system", "content": agent.instructions},
-            {"role": "user", "content": user_prompt}
-        ]
+            # {"role": "user", "content": user_prompt}
+        ] + user_prompt_list
 
-        # Prepare request arguments
         request_kwargs = {
             "model": agent.model,
             "messages": messages,
             "temperature": 0.7,
         }
 
-        # Only add functions & function_call if functions list is not empty
         if functions:
             request_kwargs["functions"] = functions
             request_kwargs["function_call"] = "auto"
 
         while True:
             response = await client.chat.completions.create(**request_kwargs)
-
             message = response.choices[0].message
 
             if message.function_call is not None:
@@ -55,13 +53,17 @@ class Runner:
                 if tool_fn is None:
                     raise ValueError(f"Tool '{func_name}' not found")
 
-                tool_result = await tool_fn(**func_args)
+                raw_result = await tool_fn(**func_args)
+                tool_result = ToolCallOutput(
+                    request_id="tool_" + func_name,
+                    result=raw_result
+                )
 
-                messages.append(message)  # model's function call message
+                messages.append(message)
                 messages.append({
                     "role": "function",
                     "name": func_name,
-                    "content": tool_result
+                    "content": tool_result.dict()  # Use dict() instead of json()
                 })
 
                 request_kwargs["messages"] = messages

@@ -1,5 +1,11 @@
-def make_tool(fn, name: str, description: str, param_schema: dict):
-    fn.__name__ = name
-    fn.description = description
-    fn.parameters = param_schema
-    return fn
+def make_tool(fn, name, description, param_schema):
+    import functools
+
+    @functools.wraps(fn)
+    async def wrapper(**kwargs):
+        return await fn(**kwargs)
+
+    wrapper.name = name
+    wrapper.description = description
+    wrapper.parameters = param_schema
+    return wrapper

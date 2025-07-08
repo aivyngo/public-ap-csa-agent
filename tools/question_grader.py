@@ -1,8 +1,9 @@
 import re
+from datetime import datetime
 from agents import Agent, Runner
-from tools.utils import make_tool
+from models.models import QuestionGraderInput, QuestionGraderOutput
 
-async def grade_question(question: str, response: str, rubric: str = None) -> tuple[str, str]:
+async def grade_question_tool(input: QuestionGraderInput, request_id: str) -> QuestionGraderOutput:
     agent = Agent(
         name="Question Grader",
         instructions="""
@@ -30,41 +31,26 @@ async def grade_question(question: str, response: str, rubric: str = None) -> tu
     )
 
     prompt = f"""
-    Question: {question}
-    Student's Response: {response}
-    Rubric: {rubric if rubric else "No rubric provided. Please generate one."}
+    Question: {input.question}
+    Student's Response: {input.response}
+    Rubric: {input.rubric if input.rubric else "No rubric provided. Please generate one."}
     """
 
     raw_output = await Runner.run(agent, prompt)
 
-    # Try to extract score using regex
+    # Extract score
     score_match = re.search(r"Score:\s*(\d+\/\d+)", raw_output)
-    if score_match:
-        score = score_match.group(1)
-    else:
-        score = "Score not found"
+    score = score_match.group(1) if score_match else "Score not found"
 
-    # Try to extract feedback section (everything after "Feedback:")
+    # Extract feedback
     feedback_match = re.search(r"Feedback:\s*(.*)", raw_output, re.DOTALL)
     feedback = feedback_match.group(1).strip() if feedback_match else raw_output.strip()
 
-    return score, feedback
-
-grade_question = make_tool(
-    grade_question,
-    name="grade_question",
-    description="Grades a student's response to an AP CSA question using a rubric.",
-    param_schema={
-        "type": "object",
-        "properties": {
-            "question": {"type": "string", "description": "The AP CSA question being answered"},
-            "response": {"type": "string", "description": "The student's answer"},
-            "rubric": {
-                "type": "array",
-                "items": {"type": "string"},
-                "description": "List of rubric points required for full credit"
-            }
-        },
-        "required": ["question", "response", "rubric"]
-    }
-)
+    return QuestionGraderOutput(
+        tool_name="grade_question",
+        request_id=request_id,
+        status="success",
+        score=score,
+        feedback=feedback,
+        timestamp=datetime.utcnow().isoformat()
+    )

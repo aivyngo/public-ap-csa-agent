@@ -1,4 +1,2 @@
-# public-ap-csa-agent
-
 # AP Computer Science Agent
 An AI powered AP Computer Science agent powered by the tim-large model meant to help students by giving them relevant Java info, generating practice problems, and grading/giving feedback on their responses.

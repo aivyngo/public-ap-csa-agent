@@ -1,6 +1,9 @@
 # Environment files
 .env
 
+# test
+apcsaagent-test/
+
 # Python cache
 __pycache__/
 *.pyc

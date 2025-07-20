@@ -1,6 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional, Union, Literal, Dict, Any
-from datetime import datetime
+from typing import Optional, Union, Literal
 
 # QUESTION GENERATOR TOOL
 class QuestionGeneratorInput(BaseModel): # input schema
@@ -65,7 +64,6 @@ class ToolCallInput(BaseModel):
     ]
     request_id: str
 
-# ToolCallResponse
 class ToolCallOutput(BaseModel):
     request_id: str
     result: Union[

@@ -21,7 +21,7 @@ async def generate_question(input: QuestionGeneratorInput, request_id: str) -> Q
         If it is free response, generate a detailed question suitable for open-ended coding or conceptual response.
         Return only the question and choices (if any) in your output.
         """,
-        model= "gpt-4o" #"tim-large"
+        model= "gpt-4o"
     )
 
     # Wrap prompt in list of dicts with user role

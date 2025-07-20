@@ -27,7 +27,7 @@ async def grade_question(input: QuestionGraderInput, request_id: str) -> Questio
         Feedback:
         [detailed feedback here]
         """,
-        model= "gpt-4o" #"tim-large"
+        model= "gpt-4o"
     )
 
     prompt_messages = [

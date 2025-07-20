@@ -5,14 +5,11 @@ from datetime import datetime
 from PyPDF2 import PdfReader
 from models.models import TextbookSearchInput, TextbookSearchOutput
 
-# --- PDF Setup ---
-
+# PDF set up
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 PDF_PATH = os.path.join(CURRENT_DIR, "textbook.pdf")
 
-
-# --- Tool function ---
-
+# tool function
 async def textbook_search(input: TextbookSearchInput, request_id: str) -> TextbookSearchOutput:
     if not os.path.exists(PDF_PATH):
         return TextbookSearchOutput(

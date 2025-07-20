@@ -1,3 +1,26 @@
+# Environment files
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environment
+venv/
+
+# macOS system files
+.DS_Store
+
+# IDE/editor folders
+.vscode/
+.idea/
+
+# Logs and databases
+*.log
+*.sqlite3
+
+
 .env
 __pycache__/
 

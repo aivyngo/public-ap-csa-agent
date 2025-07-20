@@ -7,7 +7,7 @@ SERPER_API_KEY = "7ca1e00336f1944166687f9a5a9cc316f8533f6a"
 
 # --- Tool function ---
 
-async def web_search_tool(input: WebSearchInput, request_id: str) -> WebSearchOutput:
+async def web_search(input: WebSearchInput, request_id: str) -> WebSearchOutput:
     url = "https://google.serper.dev/search"
     headers = {"X-API-KEY": SERPER_API_KEY}
     payload = {"q": f"AP Computer Science: {input.topic}"}

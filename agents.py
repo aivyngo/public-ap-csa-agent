@@ -63,9 +63,9 @@ class Runner:
                 messages.append({
                     "role": "function",
                     "name": func_name,
-                    "content": tool_result.dict()  # Use dict() instead of json()
+                    "content": json.dumps(tool_result.dict())# tool_result.dict()  # Use dict() instead of json()
                 })
 
                 request_kwargs["messages"] = messages
             else:
-                return message.content
+                    return message.content

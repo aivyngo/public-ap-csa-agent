@@ -3,7 +3,7 @@ from datetime import datetime
 from agents import Agent, Runner
 from models.models import QuestionGraderInput, QuestionGraderOutput
 
-async def grade_question_tool(input: QuestionGraderInput, request_id: str) -> QuestionGraderOutput:
+async def grade_question(input: QuestionGraderInput, request_id: str) -> QuestionGraderOutput:
     agent = Agent(
         name="Question Grader",
         instructions="""
@@ -27,16 +27,21 @@ async def grade_question_tool(input: QuestionGraderInput, request_id: str) -> Qu
         Feedback:
         [detailed feedback here]
         """,
-        model="gpt-4o"
+        model= "gpt-4o" #"tim-large"
     )
 
-    prompt = f"""
-    Question: {input.question}
-    Student's Response: {input.response}
-    Rubric: {input.rubric if input.rubric else "No rubric provided. Please generate one."}
-    """
+    prompt_messages = [
+        {
+            "role": "user",
+            "content": f"""
+Question: {input.question}
+Student's Response: {input.response}
+Rubric: {input.rubric if input.rubric else "No rubric provided. Please generate one."}
+            """.strip()
+        }
+    ]
 
-    raw_output = await Runner.run(agent, prompt)
+    raw_output = await Runner.run(agent, prompt_messages)
 
     # Extract score
     score_match = re.search(r"Score:\s*(\d+\/\d+)", raw_output)

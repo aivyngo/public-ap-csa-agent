@@ -1,9 +1,6 @@
 # AP Computer Science Agent
 An AP Computer Science agent powered by FastAPI, OpenWebUI, and the tim-large model meant to help students by giving them relevant Java info, generating practice problems, and grading/giving feedback on their responses.
 
-## Motivation
-Inspired by the lack of AP CSA resources at my high school. This project is meant to make CS accessible for all students, regardless of income/area/resources.
-
 ## Features/Tools
 - generates and grades questions using question generator and question grader tools
 - generates rubrics using question grader tool

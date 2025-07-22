@@ -10,7 +10,7 @@ Inspired by the lack of AP CSA resources at my high school. This project is mean
 - searches for relevant info based on query using web search and textbook search tool
 - communicate with agent via OpenWebUI
 
-Each tool has an endpoint in main.py, logic in tools/, and Pydantic input and output schemas in models/. All tools were unified into a call_tool endpoint, which run_apcsa_agent may call in the endpoint used for chatting on OpenWebUI in main.py depending on if tool calls are necessary.
+Each tool has an endpoint in main.py, logic in tools/, and Pydantic input and output schemas in models/. All tools were unified into a call_tool endpoint, which run_apcsa_agent may call in the /v1/chat/completions endpoint used for chatting on OpenWebUI in main.py depending on if tool calls are necessary.
 
 ## Using the Agent
 ### Prerequisites
@@ -40,8 +40,9 @@ docker start open-webui
 ```bash
 uvicorn main:app --host 0.0.0.0 --port 8060 --workers 2
 ```
+You can change the ports being used if you'd like.
 ### Chatting with Agent
-Visit http://localhost:3000. Click on your profile on the top right, then settings, then connections. Use http://192.222.54.121:8060/v1 for the custom link. The API name can be anything. Click save and then exit settings. In the dropdown, you should now see "tim-large" as a model, and you can now start chatting!
+Visit http://localhost:3000. Click on your profile on the top right, then settings, then connections. Use your custom API endpoint pointing to your backend's /v1 URL for the link. The API name can be anything. Click save and then exit settings. In the dropdown, you should now see "tim-large" as a model, and you can now start chatting!
 
 ## Using the tim-large Model for your own Agent
 This project uses a LLM called tim-large. You can integrate this model into your own agent:
@@ -50,7 +51,7 @@ The FastAPI backend exposes the /v1/chat/completions endpoint that implements Op
 
 The agent connects with OpenWebUI via its Connections settings, where you add a custom API endpoint pointing to your backend’s /v1 URL.
 
-The backend supports calling multiple specialized tools (question generation, grading, web/textbook search) through JSON-based function calls. All tools were unified into a call_tool endpoint, which run_apcsa_agent may call in the endpoint used for chatting on OpenWebUI in main.py depending on if tool calls are necessary. You can replace run_apcsa_agent with a function analogous to it that matches your agent.
+The backend supports calling multiple specialized tools (question generation, grading, web/textbook search) through JSON-based function calls. All tools were unified into a call_tool endpoint, which run_apcsa_agent may call in the endpoint used for chatting on OpenWebUI in main.py depending on if tool calls are necessary. You can replace run_apcsa_agent with a function analogous to it that matches your agent; follow the formatting for tools[] in run_apcsa_agent, but replace it with your own tools. The URL should be where you are able to call and access your own tools.
 
 You can add or replace tools by modifying the tools/ folder and updating the TOOL_REGISTRY in your backend.
 

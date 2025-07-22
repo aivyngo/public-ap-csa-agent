@@ -32,19 +32,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# just testing the agent in basic
-#@app.post("/apcsa-agent", response_model=PromptResponse)
-#async def apcsa_agent_endpoint(request: PromptRequest):
-    #response = await run_apcsa_agent(request.prompt)
-    #return PromptResponse(response=response)
-
 # testing the basic question generator tool for now
 @app.post("/question-generator", response_model=QuestionGeneratorOutput)
 async def question_generator_endpoint(request: QuestionGeneratorInput):
     request_id = datetime.utcnow().isoformat()
     question_output = await generate_question(request, request_id)
     return question_output
-
 
 # testing question grader
 @app.post("/grade", response_model=QuestionGraderOutput)
@@ -82,13 +75,6 @@ async def call_tool(request: ToolCallInput):
 
     # return result
     return ToolCallOutput(request_id=request.request_id, result=result)
-
-TOOL_INPUT_MODELS = {
-    "generate_question": QuestionGeneratorInput,
-    "grade_question": QuestionGraderInput,
-    "web_search": WebSearchInput,
-    "textbook_search": TextbookSearchInput
-}
 
 @app.get("/")
 async def root():
@@ -155,10 +141,7 @@ async def chat_completions(request: Request):
         yield f"data: {json.dumps({'choices': [{'finish_reason': 'stop'}]})}\n\n"
         yield "data: [DONE]\n\n"
 
-    
-
     return StreamingResponse(event_generator(), media_type="text/event-stream")
-
 
 @app.get("/v1/models")
 async def list_models():

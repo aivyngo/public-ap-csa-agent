@@ -42,9 +42,10 @@ You can change the ports being used if you'd like.
 Visit http://localhost:3000. Click on your profile on the top right, then settings, then connections. Use your custom API endpoint pointing to your backend's /v1 URL for the link. The API name can be anything. Click save and then exit settings. In the dropdown, you should now see "tim-large" as a model, and you can now start chatting!
 
 ## Using the tim-large Model for your own Agent
-This project uses a LLM called tim-large. You can integrate this model into your own agent:
+This project uses a LLM called `tim-large`. You can integrate this model into your own agent:
 
-The FastAPI backend exposes the /v1/chat/completions endpoint that implements OpenAI-compatible chats and tool calling.
+The tim-large API hosted by [Subconscious.dev](https://subconscious.dev
+)) exposes the `/v1/chat/completions` endpoint that implements OpenAI-compatible chats and tool calling.
 
 The agent connects with OpenWebUI via its Connections settings, where you add a custom API endpoint pointing to your backend’s /v1 URL.
 

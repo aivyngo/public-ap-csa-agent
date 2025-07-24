@@ -44,17 +44,17 @@ Visit http://localhost:3000. Click on your profile on the top right, then settin
 ## Using the tim-large Model for your own Agent
 This project uses a LLM called `tim-large`. You can integrate this model into your own agent:
 
-The tim-large API hosted by [Subconscious.dev](https://subconscious.dev
+The tim-large API hosted by [Subconscious.dev]((https://subconscious.dev
 )) exposes the `/v1/chat/completions` endpoint that implements OpenAI-compatible chats and tool calling.
 
 The agent connects with OpenWebUI via its Connections settings, where you add a custom API endpoint pointing to your backend’s /v1 URL.
 
-The backend supports calling multiple specialized tools (question generation, grading, web/textbook search) through JSON-based function calls. All tools were unified into a call_tool endpoint, which run_apcsa_agent may call in the endpoint used for chatting on OpenWebUI in main.py depending on if tool calls are necessary. You can replace run_apcsa_agent with a function analogous to it that matches your agent; follow the formatting for tools[] in run_apcsa_agent, but replace it with your own tools. The URL should be where you are able to call and access your own tools.
+The backend supports calling multiple specialized tools (question generation, grading, web/textbook search) through JSON-based function calls. All tools were unified into a `call_tool` endpoint, which `run_apcsa_agent` may call in the endpoint used for chatting on OpenWebUI in `main.py` depending on if tool calls are necessary. You can replace `run_apcsa_agent` with a function analogous to it that matches your agent; follow the formatting for `tools[]` in `run_apcsa_agent`, but replace it with your own tools. The URL should be where you are able to call and access your own tools.
 
-You can add or replace tools by modifying the tools/ folder and updating the TOOL_REGISTRY in your backend.
+You can add or replace tools by modifying the `tools/` folder and updating the `TOOL_REGISTRY` in your backend.
 
-Host your backend API exposing /v1/chat/completions with the tim-large model.
+Host your backend API exposing `/v1/chat/completions` with the `tim-large` model.
 
 Run OpenWebUI and add a connection to your backend URL.
 
-Start chatting on OpenWebUI with tim-large powering responses and tool usage.
+Start chatting on OpenWebUI with `tim-large` powering responses and tool usage.

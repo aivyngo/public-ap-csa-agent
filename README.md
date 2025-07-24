@@ -1,5 +1,5 @@
 # AP Computer Science Agent
-An AP Computer Science agent powered by FastAPI, OpenWebUI, and the tim-large model meant to help students by giving them relevant Java info, generating practice problems, and grading/giving feedback on their responses.
+An AP Computer Science agent powered by FastAPI, OpenWebUI, and the `tim-large` model meant to help students by giving them relevant Java info, generating practice problems, and grading/giving feedback on their responses.
 
 ## Features/Tools
 - generates and grades questions using question generator and question grader tools
@@ -7,7 +7,7 @@ An AP Computer Science agent powered by FastAPI, OpenWebUI, and the tim-large mo
 - searches for relevant info based on query using web search and textbook search tool
 - communicate with agent via OpenWebUI
 
-Each tool has an endpoint in main.py, logic in tools/, and Pydantic input and output schemas in models/. All tools were unified into a call_tool endpoint, which run_apcsa_agent may call in the /v1/chat/completions endpoint used for chatting on OpenWebUI in main.py depending on if tool calls are necessary.
+Each tool has an endpoint in `main.py`, logic in `tools/`, and Pydantic input and output schemas in `models/`. All tools were unified into a `call_tool` endpoint, which `run_apcsa_agent` may call in the `/v1/chat/completions` endpoint used for chatting on OpenWebUI in `main.py` depending on if tool calls are necessary.
 
 ## Using the Agent
 ### Prerequisites
@@ -39,7 +39,7 @@ uvicorn main:app --host 0.0.0.0 --port 8060 --workers 2
 ```
 You can change the ports being used if you'd like.
 ### Chatting with Agent
-Visit http://localhost:3000. Click on your profile on the top right, then settings, then connections. Use your custom API endpoint pointing to your backend's /v1 URL for the link. The API name can be anything. Click save and then exit settings. In the dropdown, you should now see "tim-large" as a model, and you can now start chatting!
+Visit http://localhost:3000. Click on your profile on the top right, then settings, then connections. Use your custom API endpoint pointing to your backend's /v1 URL for the link. The API name can be anything. Click save and then exit settings. In the dropdown, you should now see `tim-large` as a model, and you can now start chatting!
 
 ## Using the tim-large Model for your own Agent
 This project uses a LLM called `tim-large`. You can integrate this model into your own agent:

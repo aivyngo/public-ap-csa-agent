@@ -103,5 +103,4 @@ async def run_apcsa_agent(msg_list: List) -> str:
         ]
     )   
     
-    #return resp.choices[0].message.content
     return (json.loads(resp.choices[0].message.content)['answer'])

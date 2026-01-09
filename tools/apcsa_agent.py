@@ -4,7 +4,7 @@ from typing import List
 
 openai_client = OpenAI(
     base_url = "https://api.subconscious.dev/v1",
-    api_key = "test-key" # get API KEY from https://subconscious.dev
+    api_key = "test-key" # get API KEY at https://subconscious.dev 
 )
 
 async def run_apcsa_agent(msg_list: List) -> str:

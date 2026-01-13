@@ -9,7 +9,6 @@ from models.models import (
     TextbookSearchInput, TextbookSearchOutput,
     ToolCallInput, ToolCallOutput
 )
-#from tools.apcsa_agent import run_apcsa_agent
 from tools.question_generator import generate_question
 from tools.question_grader import grade_question
 from tools.web_search import web_search
@@ -89,15 +88,12 @@ async def chat_completions(request: Request):
 
     if not messages:
         return JSONResponse({"error": "No messages provided."}, status_code=400)
-
-    # user_message = messages[-1].get("content", "")
     input_msgs = [
         {'role': 'system', 'content': 'You are given an instruction about AP CS test. Respond to it without overthinking. Use each tool at most Once.'}
     ] + messages
     agent_response = await run_apcsa_agent(input_msgs)
     print("🔍 Agent Response:\n", agent_response)
 
-    # Convert dict/list to string if needed
     if isinstance(agent_response, (dict, list)):
         agent_response = json.dumps(agent_response, indent=2)
 
@@ -122,7 +118,6 @@ async def chat_completions(request: Request):
     }
 
     if not stream:
-        # Normal non-streaming response
         full_data["usage"] = {
             "prompt_tokens": 0,
             "completion_tokens": len(agent_response.split()),
@@ -130,14 +125,11 @@ async def chat_completions(request: Request):
         }
         return JSONResponse(full_data)
 
-    # Streaming mode — simulate chunks
     async def event_generator():
         yield f"data: {json.dumps({'choices': [{'delta': {'role': 'assistant'}}]})}\n\n"
-        # Simulate word-by-word or chunked stream
         for chunk in agent_response.split(" "):
             await asyncio.sleep(0.05)
             yield f"data: {json.dumps({'choices': [{'delta': {'content': chunk + ' '}}]})}\n\n"
-        # Finish
         yield f"data: {json.dumps({'choices': [{'finish_reason': 'stop'}]})}\n\n"
         yield "data: [DONE]\n\n"
 

@@ -24,7 +24,6 @@ async def generate_question(input: QuestionGeneratorInput, request_id: str) -> Q
         model= "gpt-4o"
     )
 
-    # Wrap prompt in list of dicts with user role
     prompt_messages = [
         {"role": "user", "content": f"Topic: {input.topic}\nQuestion type: {input.qtype}"}
     ]

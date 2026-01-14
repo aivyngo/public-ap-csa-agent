@@ -27,7 +27,6 @@ class Runner:
 
         messages = [
             {"role": "system", "content": agent.instructions},
-            # {"role": "user", "content": user_prompt}
         ] + user_prompt_list
 
         request_kwargs = {
@@ -63,7 +62,7 @@ class Runner:
                 messages.append({
                     "role": "function",
                     "name": func_name,
-                    "content": json.dumps(tool_result.dict()) # tool_result.dict()  
+                    "content": json.dumps(tool_result.dict()) 
                 })
 
                 request_kwargs["messages"] = messages

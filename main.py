@@ -31,14 +31,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# testing the basic question generator tool for now
 @app.post("/question-generator", response_model=QuestionGeneratorOutput)
 async def question_generator_endpoint(request: QuestionGeneratorInput):
     request_id = datetime.utcnow().isoformat()
     question_output = await generate_question(request, request_id)
     return question_output
 
-# testing question grader
 @app.post("/grade", response_model=QuestionGraderOutput)
 async def grade_endpoint(req: QuestionGraderInput):
     request_id = datetime.utcnow().isoformat()

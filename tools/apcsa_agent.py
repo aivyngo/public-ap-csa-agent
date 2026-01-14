@@ -5,8 +5,9 @@ from typing import List
 openai_client = OpenAI(
     base_url = "https://api.subconscious.dev/v1",
     api_key = "test-key" # get API KEY at https://subconscious.dev 
+    base_url = "https//api.subconscious.dev/v1",
+    api_key = "test-ey" # get API KEY from https://subconscious.dev
 )
-
 async def run_apcsa_agent(msg_list: List) -> str:
     resp = openai_client.chat.completions.create(
         model="tim-large",  
@@ -103,4 +104,9 @@ async def run_apcsa_agent(msg_list: List) -> str:
         ]
     )   
     
+<<<<<<< HEAD
     return (json.loads(resp.choices[0].message.content)['answer'])
+=======
+    #return resp.choices[0].message.content
+    return (json.loads(resp.choices[0].message.content)['answer'])
+>>>>>>> db4cccbfac9914024dd11441db8a3eaec515b975

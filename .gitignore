@@ -1,48 +1,29 @@
-# -----------------------
-# Python
-# -----------------------
+
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
-# Virtual environments
 venv/
 .env
 
-# Logs & databases
 *.log
 *.sqlite3
 
-# -----------------------
-# IDE / Editor files
-# -----------------------
 .vscode/
 .idea/
 
-# -----------------------
-# Python packaging / build
-# -----------------------
 build/
 dist/
 *.egg-info/
 *.egg
 *.whl
 
-# -----------------------
-# Testing / coverage
-# -----------------------
 .coverage
 .coverage.*
 .pytest_cache/
 htmlcov/
 
-# -----------------------
-# Jupyter / notebooks
-# -----------------------
 .ipynb_checkpoints/
 
-# -----------------------
-# Misc / OS
-# -----------------------
 .DS_Store

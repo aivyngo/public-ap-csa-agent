@@ -104,9 +104,4 @@ async def run_apcsa_agent(msg_list: List) -> str:
         ]
     )   
     
-<<<<<<< HEAD
     return (json.loads(resp.choices[0].message.content)['answer'])
-=======
-    #return resp.choices[0].message.content
-    return (json.loads(resp.choices[0].message.content)['answer'])
->>>>>>> db4cccbfac9914024dd11441db8a3eaec515b975
